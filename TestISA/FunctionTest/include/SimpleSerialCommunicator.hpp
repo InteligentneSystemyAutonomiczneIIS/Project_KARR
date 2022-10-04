@@ -55,12 +55,27 @@ public:
 
     bool HasData()
     {
+        CheckForNewData();
         return m_hasNewMessage;
     }
 
     String GetParsedMessage()
     {
         return "NotImplementedException";
+    }
+
+
+
+private:
+
+    void CheckForNewData()
+    {
+        if (Serial.available()) 
+        {
+            char incomingByte = Serial.read();  // will not be -1
+            // actually do something with incomingByte
+        }
+
     }
 
 };
