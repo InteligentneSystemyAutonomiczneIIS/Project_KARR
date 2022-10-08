@@ -15,6 +15,7 @@ private:
     bool m_isInitialized = false;
     bool m_serialTimeoutInMiliseconds = 3000;
     bool m_hasNewMessage = false;
+    String m_message = "";
     std::vector<char> m_messageBuffer;
     const int m_messageBufferMaxSize = 128;
     String m_messageStartMarker = "";
@@ -41,6 +42,7 @@ public:
         while (!Serial && elapsedTime < m_serialTimeoutInMiliseconds) 
         {
             // wait up to Timeout seconds for Serial Monitor initialization
+            elapsedTime = startTime + millis();
         }
 
         if (Serial) 
@@ -59,21 +61,38 @@ public:
         return m_hasNewMessage;
     }
 
-    String GetParsedMessage()
+    String GetMessage()
     {
-        return "NotImplementedException";
+        if (m_hasNewMessage)
+        {
+            
+            m_hasNewMessage = false;
+            String returnedMessage = m_message.trim().toLowerCase();
+            m_message = "";
+            return returnedMessage;
+        }
+        else
+        {
+            return "";
+        }
     }
-
-
 
 private:
 
     void CheckForNewData()
     {
-        if (Serial.available()) 
+        while(Serial.available())
         {
-            char incomingByte = Serial.read();  // will not be -1
-            // actually do something with incomingByte
+            char incomingByte = Serial.read();  // will not be -1;
+            if (incomingByte == '\n')
+            {
+                m_hasNewMessage = true;
+            }
+            else 
+            {
+                m_hasNewMessage = false;
+            }
+            m_message += (char)incomingByte;
         }
 
     }
