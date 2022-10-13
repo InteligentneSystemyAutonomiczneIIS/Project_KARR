@@ -15,9 +15,9 @@ class Motor
 private:
 
     // Traxxas XL5 ESC requires signals to be in 1ms (min) to 2ms (max), where 1,5ms is zero
-    int m_minimumPWMSignalLengthInMicroseconds = TRAXXAX_PWM_MICROSECONDS_MIN;
-    int m_maximumPWMSignalLengtoInMicroseconds = TRAXXAS_PWM_MICROSECONDS_MAX;
-    int m_zeroPWMSignalInMicroseconds = TRAXXAS_PWM_MICROSECONDS_ZERO;
+    int m_minimumPWMSignalLengthInMicroseconds = chassis_defines::TRAXXAX_PWM_MICROSECONDS_MIN;
+    int m_maximumPWMSignalLengtoInMicroseconds = chassis_defines::TRAXXAS_PWM_MICROSECONDS_MAX;
+    int m_zeroPWMSignalInMicroseconds = chassis_defines::TRAXXAS_PWM_MICROSECONDS_ZERO;
 
     
     uint8_t m_PWMControlPin = -1;
