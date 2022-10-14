@@ -10,12 +10,13 @@ namespace chassis_defines
     const int TRAXXAX_PWM_MICROSECONDS_MIN = 1000;
     const int TRAXXAS_PWM_MICROSECONDS_MAX = 2000;
     const int TRAXXAS_PWM_MICROSECONDS_ZERO = 1500;
-    const int steeringServoTrimInMicroseconds = 0;
+    // const int steeringServoTrimInMicroseconds = 0;
+    const int steeringServoTrimInMicroseconds = -300; // - TEMPORARY - for old platform and straight ahead (pitch)
 
 
     const int watchdogTimer_maxTimeBetweenCommandsInMiliseconds = 1500;
-    const int motorPin = 20; // Temporary - Yaw
-    const int steeringPin = 21; //Temporary - Pitch
+    const int motorPin = 20; // Temporary - Yaw (mf 50 - slightly left, mr 50 - slightly right)
+    const int steeringPin = 21; //Temporary - Pitch (sl 80 is front (NEVER GO ABOVE 90); sr 80 is up)
     const float motorPowerLevelDefaultConstraintForward = 1.0f; 
     const float motorPowerLevelDefaultConstraintBackward = -1.0f; 
     const float steeringSwingDefaultConstraintLeft = -1.0f; 
