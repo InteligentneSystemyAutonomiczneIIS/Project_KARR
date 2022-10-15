@@ -6,7 +6,7 @@
 class UltrasonicSensor
 {
 private:
-    const NewPing &m_internalSensor;
+    NewPing m_internalSensor;
     unsigned int m_pingIntervalInMiliseconds = chassis_defines::ULTRASONIC_PING_INTERVAL;
 
     unsigned int m_latestDistance = 0;
@@ -14,8 +14,6 @@ private:
 public:
     String sensorDescription = "";
     std::array<int,3> positionOffsetXYZFromOriginInMilimeters;
-
-
 
 
 public:
@@ -29,21 +27,31 @@ public:
     }
 
 
-    void TriggerSensor()
-    {
-
-    }
-
-    unsigned int getDistance()
+    void Initialize()
     {
 
     }
 
 
-    void setPingInterval(unsigned int pingInterval)
+
+    unsigned int GetDistanceInCentimeters()
+    {
+        return TriggerSensor_Blocking();
+    }
+
+
+    void SetPingInterval(unsigned int pingInterval)
     {
         m_pingIntervalInMiliseconds = pingInterval;
     }
 
+
+private: 
+    int TriggerSensor_Blocking()
+    {
+        int distance = m_internalSensor.ping_cm();
+        delay(m_pingIntervalInMiliseconds); // necessary to eliminate sensor crosstalk (echo/sound bounces?)
+        return distance;
+    }
 
 };

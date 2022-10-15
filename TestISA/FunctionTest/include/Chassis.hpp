@@ -18,10 +18,11 @@ private:
     Steering steering;
     TeensyTimerTool::OneShotTimer m_CommunicationWatchdogTimer;
     // TeensyTimerTool::PeriodicTimer m_watchdogTimer;
+
+    std::chrono::milliseconds m_maxTimeBetweenCommands{chassis_defines::WATCHDOG_MAX_TIME_BETWEEN_COMMANDS_IN_MILISECONDS};
+
+public:
     SensorArray ultrasonicSensors;
-
-    std::chrono::milliseconds m_maxTimeBetweenCommands{chassis_defines::watchdogTimer_maxTimeBetweenCommandsInMiliseconds};
-
 
 public:
     Chassis()
@@ -32,8 +33,8 @@ public:
 
     void Initialize()
     {
-        motor.Initialize(chassis_defines::motorPin,chassis_defines::motorPowerLevelDefaultConstraintForward, chassis_defines::motorPowerLevelDefaultConstraintBackward);
-        steering.Initialize(chassis_defines::steeringPin, chassis_defines::steeringSwingDefaultConstraintLeft, chassis_defines::steeringSwingDefaultConstraintRight);
+        motor.Initialize(chassis_defines::MOTOR_PIN,chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD, chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD);
+        steering.Initialize(chassis_defines::STEERING_PIN, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_LEFT, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_RIGHT);
         ultrasonicSensors.Initialize();
 
         InitializeWatchdogTimers();
