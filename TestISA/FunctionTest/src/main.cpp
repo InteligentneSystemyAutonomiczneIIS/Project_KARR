@@ -1,7 +1,9 @@
 #include <Arduino.h>
+#include <Wire.h>
 #include <helper_functions.hpp>
 #include <Chassis.hpp>
 #include <SimpleSerialCommunicator.hpp>
+
 
 // Main chassis definition
 Chassis traxxas4_tec;
@@ -116,6 +118,18 @@ int parseSteeringCommand(String command)
 
 void setup() {
   	// put your setup code here, to run once:
+
+	// Initialize Serial communication
+    // initSerial();
+	comm.Initialize(115200);
+
+	//Initialize I2C communication
+	Wire.begin();
+	Wire1.begin();
+	Wire2.begin();
+  	// Wire.setClock(400000); // use 400 kHz I2C
+
+
 	delay(1000);
 	for (int i = 0; i < 10; i++)
 	{
@@ -124,9 +138,6 @@ void setup() {
 	}
 	Serial.println("");
 	
-	// Initialize Serial communication
-    // initSerial();
-	comm.Initialize(115200);
 
 	//initialize builtin LED
     initLED();
@@ -248,6 +259,10 @@ void loop()
 			{
 				Serial.println("Sensor: " + descriptions.at(i) + "; Distance: " + distances.at(i) + " cm");
 			}
+
+			auto tofDistance = traxxas4_tec.tofSensor.GetDistanceInMilimeters();
+			Serial.println("TOF sensor distance: " + String(tofDistance) + " mm");
+
 			
 		}
 

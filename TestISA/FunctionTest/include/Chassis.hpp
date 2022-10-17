@@ -1,9 +1,10 @@
 // Definition of a chassis
 // Collection of steering, motors and sensors
+#include <TeensyTimerTool.h>
 #include <Motor.hpp>
 #include <Steering.hpp>
 #include <SensorArray.hpp>
-#include "TeensyTimerTool.h"
+#include <TOFDistanceSensor.hpp>
 #include <chrono>
 
 // TODO: 
@@ -23,6 +24,7 @@ private:
 
 public:
     SensorArray ultrasonicSensors;
+    TOFDistanceSensor tofSensor;
 
 public:
     Chassis()
@@ -36,6 +38,7 @@ public:
         motor.Initialize(chassis_defines::MOTOR_PIN,chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD, chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD);
         steering.Initialize(chassis_defines::STEERING_PIN, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_LEFT, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_RIGHT);
         ultrasonicSensors.Initialize();
+        tofSensor.Initialize();
 
         InitializeWatchdogTimers();
     }
