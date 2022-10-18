@@ -23,7 +23,10 @@ void printHelp()
 	Serial.println("   	  p (level): 0-100");
 	
 	Serial.println("  reset   - reset");
+	Serial.println("  distance   - show data from distance sensors");
 	Serial.println("  selftest   - perform a full self-test. WARNING - WILL MOVE MOTORS FULL SPEED");
+
+
 }
 
 void resetTeensy()
