@@ -15,9 +15,9 @@ class Steering
 private:
 
     // Traxxas servo - 1ms (min) to 2ms (max), where 1,5ms is zero
-    int m_minimumPWMSignalLengthInMicroseconds = TRAXXAX_PWM_MICROSECONDS_MIN;
-    int m_maximumPWMSignalLengtoInMicroseconds = TRAXXAS_PWM_MICROSECONDS_MAX;
-    int m_zeroPWMSignalInMicroseconds = min(max(TRAXXAS_PWM_MICROSECONDS_ZERO + steeringServoTrimInMicroseconds, TRAXXAX_PWM_MICROSECONDS_MIN), TRAXXAS_PWM_MICROSECONDS_MAX);
+    int m_minimumPWMSignalLengthInMicroseconds = chassis_defines::TRAXXAX_PWM_MICROSECONDS_MIN;
+    int m_maximumPWMSignalLengtoInMicroseconds = chassis_defines::TRAXXAS_PWM_MICROSECONDS_MAX;
+    int m_zeroPWMSignalInMicroseconds = min(max(chassis_defines::TRAXXAS_PWM_MICROSECONDS_ZERO + chassis_defines::STEERING_SERVO_TRIM_IN_MILISECONDS, chassis_defines::TRAXXAX_PWM_MICROSECONDS_MIN), chassis_defines::TRAXXAS_PWM_MICROSECONDS_MAX);
     
     uint8_t m_PWMControlPin = -1;
     Servo m_steeringPWM;

@@ -238,6 +238,19 @@ void loop()
 
 		}
 
+		else if (s == "distance")
+		{
+
+			auto distances = traxxas4_tec.ultrasonicSensors.GetDistancesInCentimeters();
+			auto descriptions = traxxas4_tec.ultrasonicSensors.GetSensorNames();
+
+			for (unsigned int i = 0; i< distances.size(); i++ )
+			{
+				Serial.println("Sensor: " + descriptions.at(i) + "; Distance: " + distances.at(i) + " cm");
+			}
+			
+		}
+
 		else if (s.startsWith("m")) 
 		{
 			int motorsPower = parseMotorsCommand(s);

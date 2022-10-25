@@ -2,6 +2,7 @@
 // Collection of steering, motors and sensors
 #include <Motor.hpp>
 #include <Steering.hpp>
+#include <SensorArray.hpp>
 #include "TeensyTimerTool.h"
 #include <chrono>
 
@@ -18,8 +19,10 @@ private:
     TeensyTimerTool::OneShotTimer m_CommunicationWatchdogTimer;
     // TeensyTimerTool::PeriodicTimer m_watchdogTimer;
 
-    std::chrono::milliseconds m_maxTimeBetweenCommands{watchdogTimer_maxTimeBetweenCommandsInMiliseconds};
+    std::chrono::milliseconds m_maxTimeBetweenCommands{chassis_defines::WATCHDOG_MAX_TIME_BETWEEN_COMMANDS_IN_MILISECONDS};
 
+public:
+    SensorArray ultrasonicSensors;
 
 public:
     Chassis()
@@ -30,8 +33,9 @@ public:
 
     void Initialize()
     {
-        motor.Initialize(motorPin,motorPowerLevelDefaultConstraintForward, motorPowerLevelDefaultConstraintBackward);
-        steering.Initialize(steeringPin, steeringSwingDefaultConstraintLeft, steeringSwingDefaultConstraintRight);
+        motor.Initialize(chassis_defines::MOTOR_PIN,chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD, chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD);
+        steering.Initialize(chassis_defines::STEERING_PIN, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_LEFT, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_RIGHT);
+        ultrasonicSensors.Initialize();
 
         InitializeWatchdogTimers();
     }
