@@ -128,8 +128,6 @@ void setup() {
 
 	//Initialize I2C communication
 	Wire.begin();
-	Wire1.begin();
-	Wire2.begin();
   	// Wire.setClock(400000); // use 400 kHz I2C
 
 

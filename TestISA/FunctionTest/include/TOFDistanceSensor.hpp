@@ -25,7 +25,7 @@ public:
         {
             m_isInitialized = true;
             
-            //TODO: BAD CODE - fix later !!!!
+            //TODO: BAD CODE - fix before production !!!!
             VL53L1X::DistanceMode distanceMode = VL53L1X::DistanceMode(chassis_defines::VL53L1X_DISTANCE_MODE);
             sensor.setDistanceMode(distanceMode);
             // !!!!!!!
@@ -48,6 +48,7 @@ public:
             return 0;
         }
         //blocking distance read
+        //TODO: proper, nonblocking distance read
         auto distance = sensor.read();
         if (sensor.timeoutOccurred()) 
         { 
