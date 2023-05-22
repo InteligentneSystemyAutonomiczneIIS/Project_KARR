@@ -1,11 +1,20 @@
 #include <Arduino.h>
-#include <helper_functions.hpp>
+#include "helper_functions.hpp"
 #include <Chassis.hpp>
 #include <SimpleSerialCommunicator.hpp>
+#include <fstream>
+#include <iostream>
+#include <Ethernet.h>
+
+
 
 // Main chassis definition
 Chassis traxxas4_tec;
 SimpleSerialCommunicator comm;
+bool left = 0;
+bool down = 0;
+bool up = 0;
+bool right = 0;
 
 
 void printHelp()
@@ -117,6 +126,8 @@ int parseSteeringCommand(String command)
 void setup() {
   	// put your setup code here, to run once:
 	delay(1000);
+	Serial.begin(115200);
+  	Serial.setTimeout(1.5);
 	for (int i = 0; i < 10; i++)
 	{
 		Serial.print((char)(43+2*(i&1)));
@@ -153,7 +164,7 @@ void setup() {
 	
 	Serial.println("Commands must end with character: '\\n'.");
 	Serial.println("ARDUINO IDE: Change 'No line ending' to 'Newline' in the lower portion of console window...\n");
-
+	traxxas4_tec.SetSteering(0);
 	delay(2000);
 }
 
@@ -161,9 +172,78 @@ void setup() {
 
 void loop() 
 {
-  	// put your main code here, to run repeatedly:
-
+  	String command = "";
 	String s = "";
+	if (Serial.available())
+	{
+		command = Serial.readString();
+		Serial.println(command);
+		if(command == 'r')
+		{
+			left = 0;
+			right = 0; 
+			up = 0;
+			down = 0;
+			traxxas4_tec.SetSteering(0);
+			traxxas4_tec.SetSpeed(0);
+			//traxxas4_tec.SetNeutral();
+		}
+		if(command == 'a')
+		{
+			//traxxas4_tec.SetSteering(-80);
+			left = 1;
+			right = 0; 
+		}
+		if(command == 'd')
+		{
+			//traxxas4_tec.SetSteering(80);
+			right = 1;
+			left = 0;
+		}
+		if(command == "w")
+		{
+			//traxxas4_tec.SetSpeed(30);
+			if(down)
+			{
+				traxxas4_tec.SetSpeed(0);
+				delay(100);
+			}
+			up = 1;
+			down = 0;
+		}
+		if(command == "s")
+		{
+			if(up)
+			{
+				delay(10);
+				traxxas4_tec.SetSteering(0);
+				delay(10);
+				traxxas4_tec.SetSpeed(0);
+				delay(100);
+				
+			}
+			//traxxas4_tec.SetSpeed(-30);
+			down = 1;
+			up = 0;
+		}
+	}
+	if(left)
+	{
+		traxxas4_tec.SetSteering(-80);
+	}
+	if(right)
+	{
+		traxxas4_tec.SetSteering(80);
+	}
+	if(up)
+	{
+		traxxas4_tec.SetSpeed(30);
+	}
+	if(down)
+	{
+		traxxas4_tec.SetSpeed(-30);
+	}
+	//Serial.print(x + 1);
 	if (comm.HasData())
 	{
 		s = comm.GetMessage();
@@ -202,7 +282,7 @@ void loop()
 			delay(2000);
 			Serial.println("Neutral");
 			traxxas4_tec.SetNeutral();
-			delay(1000);
+		    delay(1000);
 			
 			Serial.println("Testing motors");
 			delay(1000);
@@ -223,6 +303,10 @@ void loop()
 			delay(2000);
 			Serial.println("20 \% reverse");
 			traxxas4_tec.SetSpeed(-20);
+			delay(2000);
+			traxxas4_tec.SetSpeed(-30);
+			delay(2000);
+			traxxas4_tec.SetSpeed(-40);
 			delay(2000);
 			Serial.println("50 \% reverse");
 			traxxas4_tec.SetSpeed(-50);
@@ -277,5 +361,4 @@ void loop()
 		}
 
 	}
-
 }
