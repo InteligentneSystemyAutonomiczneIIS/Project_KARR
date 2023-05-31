@@ -276,7 +276,7 @@ void loop()
 	}
 	if(up)
 	{
-		traxxas4_tec.SetSpeed(25);
+		traxxas4_tec.SetSpeed(11);
 	}
 	if(down )
 	{
