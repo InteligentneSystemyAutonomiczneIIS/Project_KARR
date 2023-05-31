@@ -5,8 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <Ethernet.h>
-
-
+#include <cstring>
 
 // Main chassis definition
 Chassis traxxas4_tec;
@@ -168,16 +167,32 @@ void setup() {
 	delay(2000);
 }
 
-
+int SPEED_VALUE = 0;
+int TURN_VALUE = 0;
 
 void loop() 
 {
-  	String command = "";
-	String s = "";
+  	String command_value = "";
+	String command = "";
+	String turn_value = "";
+
 	if (Serial.available())
 	{
-		command = Serial.readString();
+		command_value = Serial.readString();
+
+		int split_index = 1;
+		command = command_value[0];
+
+		Serial.println(split_index);
+
+		for (int i = split_index + 1; i < (int)command_value.length(); i++){
+			turn_value += command_value[i];
+		}
+		
+		TURN_VALUE = turn_value.toInt();
+
 		Serial.println(command);
+		Serial.println(turn_value);
 		if(command == 'r')
 		{
 			left = 0;
@@ -191,14 +206,25 @@ void loop()
 		if(command == 'a')
 		{
 			//traxxas4_tec.SetSteering(-80);
-			left = 1;
-			right = 0; 
+			//if(TURN_VALUE != -80)
+			{
+				left = 1;
+				right = 0;
+				// TURN_VALUE = -80;
+				TURN_VALUE *= -1; 
+			}
+			
 		}
 		if(command == 'd')
 		{
 			//traxxas4_tec.SetSteering(80);
-			right = 1;
-			left = 0;
+			//if(TURN_VALUE != 80)
+			{
+				right = 1;
+				left = 0;
+				// TURN_VALUE = 80;
+			}
+			
 		}
 		if(command == "w")
 		{
@@ -206,47 +232,60 @@ void loop()
 			if(down)
 			{
 				traxxas4_tec.SetSpeed(0);
-				delay(100);
+				//delay(100);
 			}
+			traxxas4_tec.SetSteering(0);
+			delay(50);
+			left = 0;
+			right = 0;
 			up = 1;
 			down = 0;
+			SPEED_VALUE = 10;
+			
+			
 		}
 		if(command == "s")
 		{
 			if(up)
 			{
-				delay(10);
+				//delay(10);
 				traxxas4_tec.SetSteering(0);
 				delay(10);
 				traxxas4_tec.SetSpeed(0);
-				delay(100);
+				//delay(100);
 				
 			}
-			//traxxas4_tec.SetSpeed(-30);
-			down = 1;
-			up = 0;
+			//if(SPEED_VALUE!=-10)
+			{
+				down = 1;
+				up = 0;
+				SPEED_VALUE = -10;
+			}
+			
 		}
 	}
-	if(left)
+	if(left )
 	{
-		traxxas4_tec.SetSteering(-80);
+		// traxxas4_tec.SetSteering(-80);
+		traxxas4_tec.SetSteering(TURN_VALUE);
 	}
-	if(right)
+	if(right )
 	{
-		traxxas4_tec.SetSteering(80);
+		// traxxas4_tec.SetSteering(80);
+		traxxas4_tec.SetSteering(TURN_VALUE);
 	}
 	if(up)
 	{
-		traxxas4_tec.SetSpeed(30);
+		traxxas4_tec.SetSpeed(25);
 	}
-	if(down)
+	if(down )
 	{
 		traxxas4_tec.SetSpeed(-30);
 	}
 	//Serial.print(x + 1);
 	if (comm.HasData())
 	{
-		s = comm.GetMessage();
+		String s = comm.GetMessage();
 		Serial.println(s);
 
 		if (s == "help")
