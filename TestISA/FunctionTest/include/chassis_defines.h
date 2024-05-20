@@ -14,12 +14,19 @@ namespace chassis_defines
 
 
     const int WATCHDOG_MAX_TIME_BETWEEN_COMMANDS_IN_MILISECONDS = 1500;
+    const int MOTOR_IN_PIN = 6;
+    const int MOTOR_OUT_PIN = 9;
     const int MOTOR_PIN = 20; // Temporary - Yaw (mf 50 - slightly left, mr 50 - slightly right)
+    const int STEERING_IN_PIN = 22;
+    const int STEERING_OUT_PIN = 23;
     const int STEERING_PIN = 21; //Temporary - Pitch (sl 80 is front (NEVER GO ABOVE 90); sr 80 is up)
     const float MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD = 1.0f; 
     const float MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD = -1.0f; 
     const float STEERING_SWING_DEFAULT_CONSTRAING_LEFT = -1.0f; 
     const float STEERING_SWING_DEFAULT_CONSTRAING_RIGHT = 1.0f; 
+
+    const int SERVO_PITCH_PIN = 4;
+    const int SERVO_YAW_PIN = 5;
 
 
 
