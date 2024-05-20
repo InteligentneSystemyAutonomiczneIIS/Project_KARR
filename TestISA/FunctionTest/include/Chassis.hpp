@@ -33,8 +33,8 @@ public:
 
     void Initialize()
     {
-        motor.Initialize(chassis_defines::MOTOR_PIN,chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD, chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD);
-        steering.Initialize(chassis_defines::STEERING_PIN, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_LEFT, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_RIGHT);
+        motor.Initialize(chassis_defines::MOTOR_OUT_PIN,chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_FORWARD, chassis_defines::MOTOR_POWER_LEVEL_DEFAULT_CONSTRAINT_BACKWARD);
+        steering.Initialize(chassis_defines::STEERING_OUT_PIN, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_LEFT, chassis_defines::STEERING_SWING_DEFAULT_CONSTRAING_RIGHT);
         ultrasonicSensors.Initialize();
 
         InitializeWatchdogTimers();
