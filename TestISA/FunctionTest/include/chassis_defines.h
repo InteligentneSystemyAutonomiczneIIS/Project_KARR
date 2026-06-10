@@ -40,5 +40,9 @@ namespace chassis_defines
     const int ULTRASONNIC_MAX_DISTANCE = 200; // Maximum distance (in cm) to ping.
     const int ULTRASONIC_PING_INTERVAL = 30; // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
+    
+    const int VL53L1X_DISTANCE_MODE = 0; // 0 - short, 1 - medium, 2 - long
+    const int VL53L1X_TIMING_BUDGET_IN_MICROSECONDS = 50000; // 20000 is minimum, 30000 for short and medium; 50000 for long
+
 }
 
