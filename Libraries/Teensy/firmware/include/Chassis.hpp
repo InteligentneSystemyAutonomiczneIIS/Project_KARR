@@ -141,6 +141,7 @@ public:
             processCommand(input);
         }
 
+        servosCamera.Update();
         ApplySelectedControl();
 
     }
